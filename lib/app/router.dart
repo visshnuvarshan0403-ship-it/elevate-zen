@@ -11,6 +11,7 @@ import '../doctor/home_screen.dart';
 import '../doctor/patients_screen.dart';
 import '../doctor/profile_screen.dart';
 import '../doctor/chat_screen.dart';
+import '../doctor/patient_screen.dart';
 
 class ElevateZenRouter {
   static const String login = '/';
@@ -27,7 +28,7 @@ class ElevateZenRouter {
   static const String doctorPatients = '/doctor/patients';
   static const String doctorChat = '/doctor/chat';
   static const String doctorProfile = '/doctor/profile';
-  // static const String doctorPatient = '/doctor/patient';
+  static const String doctorPatient = '/doctor/patient';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -88,6 +89,12 @@ class ElevateZenRouter {
       case doctorPatients:
         return MaterialPageRoute(
           builder: (_) => const DoctorPatientsScreen(),
+          settings: settings,
+        );
+      
+      case doctorPatient:
+        return MaterialPageRoute(
+          builder: (_) => const DoctorPatientScreen(),
           settings: settings,
         );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../app/widgets/doctor_navigation_bar.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
   const DoctorHomeScreen({super.key});
@@ -102,9 +103,9 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: DoctorNavigationBar(
         selectedIndex: 0,
-        onDestinationSelected: (index) {
+        onSelected: (index) {
           switch (index) {
             case 0:
               break;
@@ -117,28 +118,11 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
             case 2:
               Navigator.pushReplacementNamed(
                 context,
-                '/doctor/profile',
+                '/doctor/chat',
               );
               break;
           }
         },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.people_alt_outlined),
-            selectedIcon: Icon(Icons.people_alt_rounded),
-            label: 'Patients',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
-            selectedIcon: Icon(Icons.person_rounded),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
@@ -210,15 +194,28 @@ class _Header extends StatelessWidget {
                 ),
           ),
           const Spacer(),
-          CircleAvatar(
-            radius: 25,
-            backgroundColor: colorScheme.primaryContainer,
-            child: Text(
-              'C',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onPrimaryContainer,
-                    fontWeight: FontWeight.w600,
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                debugPrint('PROFILE CLICKED');
+                Navigator.of(context).pushNamed('/doctor/profile');
+              },
+              borderRadius: BorderRadius.circular(30),
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: colorScheme.primaryContainer,
+                  child: Text(
+                    'C',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
+                ),
+              ),
             ),
           ),
         ],

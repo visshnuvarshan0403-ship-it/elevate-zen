@@ -153,7 +153,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         titleSpacing: 24,
         title: Row(
           children: [

@@ -15,7 +15,7 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
   final List<_Conversation> conversations = const [
     _Conversation(
       name: 'Nirunjhana',
-      message: 'Looking forward to our appointment...',
+      message: 'I have completed my clinical history...',
       time: '2m',
       avatarUrl: 'https://i.pravatar.cc/150?img=12',
       unread: true,
@@ -23,7 +23,7 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
     ),
     _Conversation(
       name: 'Anita Rao',
-      message: 'Attached lab reports.',
+      message: 'I uploaded my latest lab report.',
       time: '1h',
       avatarUrl: 'https://i.pravatar.cc/150?img=47',
       unread: false,
@@ -589,17 +589,19 @@ class _DoctorConversationScreenState
 
   final List<_ChatMessage> messages = [
     const _ChatMessage(
-      text: 'Hello Doctor, I wanted to confirm our appointment.',
+      text:
+      'Hello Doctor. I have completed the clinical history in Elevate Zen.',
       isDoctor: false,
       time: '10:12 AM',
     ),
     const _ChatMessage(
-      text: 'Of course. Your appointment is confirmed for tomorrow at 10:30 AM.',
+      text:
+      'I can see your submitted information. I will review it before your consultation.',
       isDoctor: true,
       time: '10:14 AM',
     ),
     const _ChatMessage(
-      text: 'Looking forward to our appointment.',
+      text: 'I also uploaded my previous lumbar X-ray for review.',
       isDoctor: false,
       time: '10:16 AM',
     ),
@@ -852,7 +854,7 @@ class _MessageComposer extends StatelessWidget {
                   textInputAction:
                       TextInputAction.newline,
                   decoration: InputDecoration(
-                    hintText: 'Message patient...',
+                    hintText: 'Message patient about their case...',
                     filled: true,
                     fillColor:
                         colorScheme.surfaceContainerHighest,

@@ -26,11 +26,6 @@ class DoctorNavigationBar extends StatelessWidget {
       selectedIcon: Icons.chat_bubble_rounded,
       label: 'Chat',
     ),
-    (
-      icon: Icons.account_box_outlined,
-      selectedIcon: Icons.account_box_rounded,
-      label: 'Profile',
-    ),
   ];
 
   @override
