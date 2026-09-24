@@ -15,6 +15,9 @@ import '../doctor/patient_screen.dart';
 import '../patient/doctor_chat_screen.dart';
 import '../patient/document_upload_screen.dart';
 import '../patient/abha_screen.dart';
+import '../veterinary/veterinary_home_screen.dart';
+import '../veterinary/veterinary_chat_screen.dart';
+import '../veterinary/veterinary_records_screen.dart';
 
 class ElevateZenRouter {
   static const String login = '/';
@@ -30,12 +33,15 @@ class ElevateZenRouter {
   static const String patientDocuments = '/patient/documents';
   static const String patientAbha = '/patient/abha';
 
-
   static const String doctorHome = '/doctor';
   static const String doctorPatients = '/doctor/patients';
   static const String doctorChat = '/doctor/chat';
   static const String doctorProfile = '/doctor/profile';
   static const String doctorPatient = '/doctor/patient';
+
+  static const String veterinaryHome = '/veterinary';
+  static const String veterinaryRecords = '/veterinary/records';
+  static const String veterinaryIntake = '/veterinary/intake';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -132,6 +138,24 @@ class ElevateZenRouter {
       case doctorProfile:
         return MaterialPageRoute(
           builder: (_) => const DoctorProfileScreen(),
+          settings: settings,
+        );
+
+      case veterinaryHome:
+        return MaterialPageRoute(
+          builder: (_) => const VeterinaryHomeScreen(),
+          settings: settings,
+        );
+
+      case veterinaryIntake:
+        return MaterialPageRoute(
+          builder: (_) => const VeterinaryChatScreen(),
+          settings: settings,
+        );
+
+      case veterinaryRecords:
+        return MaterialPageRoute(
+          builder: (_) => const VeterinaryRecordsScreen(),
           settings: settings,
         );
 

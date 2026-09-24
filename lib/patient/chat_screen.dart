@@ -552,7 +552,7 @@ class _PatientChatScreenState extends State<PatientChatScreen> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: replies.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           return ActionChip(
             label: Text(replies[index]),

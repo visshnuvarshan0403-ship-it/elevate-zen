@@ -23,11 +23,61 @@ class _LoginScreenState extends State<LoginScreen> {
   void _signIn() {
     final username = emailController.text.trim().toLowerCase();
 
+    // Prototype role routing.
+    //
+    // chinmayi -> Doctor
+    // vet / veterinary -> Veterinary
+    // anything else -> Patient
+
     if (username.contains('chinmayi')) {
-      Navigator.pushReplacementNamed(context, '/doctor');
+      Navigator.pushReplacementNamed(
+        context,
+        '/doctor',
+      );
+    } else if (username.contains('vet') ||
+        username.contains('veterinary')) {
+      Navigator.pushReplacementNamed(
+        context,
+        '/veterinary',
+      );
     } else {
-      Navigator.pushReplacementNamed(context, '/patient');
+      Navigator.pushReplacementNamed(
+        context,
+        '/patient',
+      );
     }
+  }
+
+  void _continueWithGoogle() {
+    // Prototype only.
+    // Replace with Google authentication later.
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Google sign-in will be connected here.',
+        ),
+      ),
+    );
+  }
+
+  void _forgotPassword() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Password recovery will be connected here.',
+        ),
+      ),
+    );
+  }
+
+  void _createAccount() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Account creation will be added here.',
+        ),
+      ),
+    );
   }
 
   @override
@@ -40,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             _buildHeader(colorScheme),
+
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -76,20 +127,40 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildBrand(colorScheme),
+
         const SizedBox(height: 42),
+
         _buildLoginForm(colorScheme),
+
         const SizedBox(height: 24),
+
         _buildDivider(colorScheme),
+
         const SizedBox(height: 20),
+
+        _buildGoogleButton(colorScheme),
+
+        const SizedBox(height: 24),
+
         _buildCreateAccount(colorScheme),
+
+        const SizedBox(height: 20),
+
+        _buildSecurityNote(colorScheme),
       ],
     );
   }
 
+  // ------------------------------------------------------------
+  // TOP BAR
+  // ------------------------------------------------------------
+
   Widget _buildHeader(ColorScheme colorScheme) {
     return Container(
-      height: 64,
-      padding: const EdgeInsets.symmetric(horizontal: 27),
+      height: 68,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24,
+      ),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         border: Border(
@@ -101,33 +172,73 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Row(
         children: [
           Container(
-            width: 43,
-            height: 43,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerLow,
+              color: colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              Icons.medical_information_outlined,
-              size: 27,
-              color: colorScheme.primary,
+              Icons.health_and_safety_outlined,
+              size: 24,
+              color: colorScheme.onPrimaryContainer,
             ),
           ),
+
           const SizedBox(width: 11),
-          Text(
-            'Elevate Zen',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: colorScheme.onSurface,
-                ),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'ELEVATE ZEN',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: colorScheme.primary,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.0,
+                    ),
+              ),
+              Text(
+                'Healthcare, made simpler',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+              ),
+            ],
           ),
+
           const Spacer(),
-          CircleAvatar(
-            radius: 21.5,
-            backgroundColor: colorScheme.surfaceContainerHighest,
-            child: Icon(
-              Icons.person_outline,
-              color: colorScheme.onSurfaceVariant,
+
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 6,
+            ),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: colorScheme.outlineVariant,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.lock_outline_rounded,
+                  size: 14,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'Secure',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ],
             ),
           ),
         ],
@@ -135,55 +246,54 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // ------------------------------------------------------------
+  // BRAND
+  // ------------------------------------------------------------
+
   Widget _buildBrand(ColorScheme colorScheme) {
     return Column(
       children: [
         Container(
-          width: 112,
-          height: 112,
+          width: 104,
+          height: 104,
           decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerLow,
-            borderRadius: BorderRadius.circular(28),
-            boxShadow: [
-              BoxShadow(
-                color: colorScheme.shadow.withValues(alpha: 0.12),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
+            color: colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Center(
             child: Container(
-              width: 48,
-              height: 48,
+              width: 52,
+              height: 52,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: colorScheme.primary,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(14),
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
-                Icons.medical_information_outlined,
+                Icons.health_and_safety_outlined,
                 color: colorScheme.primary,
-                size: 31,
+                size: 34,
               ),
             ),
           ),
         ),
+
         const SizedBox(height: 24),
+
         Text(
-          'Elevate Zen',
+          'Welcome back',
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: colorScheme.onSurface,
+                letterSpacing: -0.6,
               ),
+          textAlign: TextAlign.center,
         ),
+
         const SizedBox(height: 8),
+
         Text(
-          'Clearer history. Better care.',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w400,
+          'Sign in to continue your healthcare journey.',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
           textAlign: TextAlign.center,
@@ -192,34 +302,46 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // ------------------------------------------------------------
+  // LOGIN FORM
+  // ------------------------------------------------------------
+
   Widget _buildLoginForm(ColorScheme colorScheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Email or Phone',
+          'Email or mobile number',
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
         ),
+
         const SizedBox(height: 8),
+
         TextField(
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
-            hintText: 'Enter your detail',
-            prefixIcon: Icon(Icons.person_outline),
+            hintText: 'Enter your email or mobile number',
+            prefixIcon: Icon(
+              Icons.person_outline_rounded,
+            ),
           ),
         ),
+
         const SizedBox(height: 18),
+
         Text(
           'Password',
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
         ),
+
         const SizedBox(height: 8),
+
         TextField(
           controller: passwordController,
           obscureText: obscurePassword,
@@ -227,8 +349,13 @@ class _LoginScreenState extends State<LoginScreen> {
           onSubmitted: (_) => _signIn(),
           decoration: InputDecoration(
             hintText: 'Enter your password',
-            prefixIcon: const Icon(Icons.lock_outline),
+            prefixIcon: const Icon(
+              Icons.lock_outline_rounded,
+            ),
             suffixIcon: IconButton(
+              tooltip: obscurePassword
+                  ? 'Show password'
+                  : 'Hide password',
               onPressed: () {
                 setState(() {
                   obscurePassword = !obscurePassword;
@@ -242,32 +369,40 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+
+        const SizedBox(height: 6),
+
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            onPressed: () {},
-            child: const Text('Forgot password?'),
+            onPressed: _forgotPassword,
+            child: const Text(
+              'Forgot password?',
+            ),
           ),
         ),
-        const SizedBox(height: 12),
+
+        const SizedBox(height: 8),
+
         SizedBox(
           height: 56,
-          child: FilledButton(
+          child: FilledButton.icon(
             onPressed: _signIn,
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Sign in'),
-                SizedBox(width: 12),
-                Icon(Icons.arrow_forward_rounded),
-              ],
+            icon: const Icon(
+              Icons.arrow_forward_rounded,
+            ),
+            label: const Text(
+              'Sign in',
             ),
           ),
         ),
       ],
     );
   }
+
+  // ------------------------------------------------------------
+  // DIVIDER
+  // ------------------------------------------------------------
 
   Widget _buildDivider(ColorScheme colorScheme) {
     return Row(
@@ -277,15 +412,20 @@ class _LoginScreenState extends State<LoginScreen> {
             color: colorScheme.outlineVariant,
           ),
         ),
+
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 18,
+          ),
           child: Text(
             'OR',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
                 ),
           ),
         ),
+
         Expanded(
           child: Divider(
             color: colorScheme.outlineVariant,
@@ -295,21 +435,92 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // ------------------------------------------------------------
+  // GOOGLE
+  // ------------------------------------------------------------
+
+  Widget _buildGoogleButton(ColorScheme colorScheme) {
+    return SizedBox(
+      width: double.infinity,
+      height: 54,
+      child: OutlinedButton.icon(
+        onPressed: _continueWithGoogle,
+        icon: const _GoogleIcon(),
+        label: const Text(
+          'Continue with Google',
+        ),
+      ),
+    );
+  }
+
+  // ------------------------------------------------------------
+  // CREATE ACCOUNT
+  // ------------------------------------------------------------
+
   Widget _buildCreateAccount(ColorScheme colorScheme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'New to Elevate Zen? ',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
+        Flexible(
+          child: Text(
+            'New to Elevate Zen?',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+          ),
         ),
+
         TextButton(
-          onPressed: () {},
-          child: const Text('Create account'),
+          onPressed: _createAccount,
+          child: const Text(
+            'Create account',
+          ),
         ),
       ],
+    );
+  }
+
+  // ------------------------------------------------------------
+  // SECURITY NOTE
+  // ------------------------------------------------------------
+
+  Widget _buildSecurityNote(ColorScheme colorScheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.lock_outline_rounded,
+          size: 15,
+          color: colorScheme.onSurfaceVariant,
+        ),
+
+        const SizedBox(width: 6),
+
+        Flexible(
+          child: Text(
+            'Your health information stays under your control.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _GoogleIcon extends StatelessWidget {
+  const _GoogleIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'G',
+      style: TextStyle(
+        fontSize: 19,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }
