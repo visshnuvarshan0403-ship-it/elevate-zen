@@ -1027,8 +1027,6 @@ class _VeterinaryHomeScreenState extends State<VeterinaryHomeScreen> {
   }
 
   Widget _buildAssignedVetAndNextSlot(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
     return Row(
       children: [
         Expanded(
@@ -1180,61 +1178,6 @@ class _VeterinaryHomeScreenState extends State<VeterinaryHomeScreen> {
     );
   }
 
-  Widget _buildNavigationBar(BuildContext context) {
-    return NavigationBar(
-      selectedIndex: 0,
-      onDestinationSelected: (index) {
-        switch (index) {
-          case 0:
-            break;
-
-          case 1:
-            _showComingSoon(
-              'Pets',
-              'Pet management will open here.',
-            );
-            break;
-
-          case 2:
-            _resumeIntake();
-            break;
-
-          case 3:
-            _openRecords();
-            break;
-        }
-      },
-      height: 80,
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-      indicatorColor: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 0,
-      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      animationDuration: const Duration(milliseconds: 300),
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(Icons.pets_outlined),
-          selectedIcon: Icon(Icons.pets_rounded),
-          label: 'Home',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline_rounded),
-          selectedIcon: Icon(Icons.person_rounded),
-          label: 'Pets',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.psychology_alt_outlined),
-          selectedIcon: Icon(Icons.psychology_alt_rounded),
-          label: 'Intake',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.description_outlined),
-          selectedIcon: Icon(Icons.description_rounded),
-          label: 'Records',
-        ),
-      ],
-    );
-  }
 }
 
 class _Pet {

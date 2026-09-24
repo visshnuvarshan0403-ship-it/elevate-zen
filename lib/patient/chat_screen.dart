@@ -30,8 +30,6 @@ class _PatientChatScreenState extends State<PatientChatScreen> {
   final Map<String, String> _extractedData = {};
 
   bool _isTyping = false;
-  bool _showSummary = false;
-
   int _questionIndex = 0;
 
   final List<String> _questions = [
@@ -127,14 +125,6 @@ class _PatientChatScreenState extends State<PatientChatScreen> {
         ),
       );
       _isTyping = false;
-    });
-
-    _scrollToBottom();
-  }
-
-  void _generateSummary() {
-    setState(() {
-      _showSummary = true;
     });
 
     _scrollToBottom();
@@ -273,10 +263,6 @@ class _PatientChatScreenState extends State<PatientChatScreen> {
                   ),
                 ),
                 if (_isTyping) _buildTypingIndicator(colors),
-                if (_showSummary) ...[
-                  const SizedBox(height: 16),
-                  _buildSummary(colors),
-                ],
                 const SizedBox(height: 12),
               ],
             ),
@@ -635,209 +621,6 @@ class _PatientChatScreenState extends State<PatientChatScreen> {
     );
   }
 
-  Widget _buildSummary(ColorScheme colors) {
-    final missing = <String>[];
-
-    if (!_extractedData.containsKey('Severity')) {
-      missing.add('Pain severity');
-    }
-
-    if (!_extractedData.containsKey('Associated symptoms')) {
-      missing.add('Associated symptoms');
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colors.secondaryContainer,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: colors.outlineVariant,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: colors.secondary,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.summarize_outlined,
-                  color: colors.onSecondary,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  'AI Clinical Summary',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colors.onSecondaryContainer,
-                      ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _summaryItem(
-            colors,
-            'Chief complaint',
-            _extractedData['Chief complaint'] ?? 'Headache',
-          ),
-          _summaryItem(
-            colors,
-            'Onset',
-            _extractedData['Onset'] ?? 'Not provided',
-          ),
-          _summaryItem(
-            colors,
-            'Location',
-            _extractedData['Location'] ?? 'Not provided',
-          ),
-          _summaryItem(
-            colors,
-            'Pain quality',
-            _extractedData['Pain quality'] ?? 'Not provided',
-          ),
-          _summaryItem(
-            colors,
-            'Severity',
-            _extractedData['Severity'] ?? 'Not provided',
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Missing information',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colors.onSecondaryContainer,
-                ),
-          ),
-          const SizedBox(height: 8),
-          if (missing.isEmpty)
-            Text(
-              'No obvious missing fields identified.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: colors.onSecondaryContainer,
-                  ),
-            )
-          else
-            ...missing.map(
-              (item) => Padding(
-                padding: const EdgeInsets.only(bottom: 4),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.warning_amber_rounded,
-                      size: 17,
-                      color: colors.onSecondaryContainer,
-                    ),
-                    const SizedBox(width: 7),
-                    Expanded(
-                      child: Text(
-                        item,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: colors.onSecondaryContainer,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          const SizedBox(height: 18),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: colors.surface.withValues(alpha: 0.55),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.verified_outlined,
-                  size: 19,
-                  color: colors.onSecondaryContainer,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'AI-generated information should be verified by the clinician before becoming part of the final medical record.',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: colors.onSecondaryContainer,
-                          height: 1.35,
-                        ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Clinical intake sent for doctor review.',
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.send_rounded,
-              ),
-              label: const Text(
-                'Send for Doctor Review',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _summaryItem(
-    ColorScheme colors,
-    String title,
-    String value,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 105,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: colors.onSecondaryContainer.withValues(
-                      alpha: 0.75,
-                    ),
-                  ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: colors.onSecondaryContainer,
-                  ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class _ChatMessage {

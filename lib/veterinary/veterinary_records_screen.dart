@@ -224,7 +224,6 @@ class _VeterinaryRecordsScreenState
 
   Widget _buildPetHeader(ColorScheme colors) {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.fromLTRB(
         16,
         14,
@@ -305,31 +304,38 @@ class _VeterinaryRecordsScreenState
         itemBuilder: (context, index) {
           final selected = _selectedTab == index;
 
-          return FilledButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedTab = index;
-              });
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: selected
-                  ? colors.primary
-                  : colors.surfaceContainerHighest,
-              foregroundColor: selected
-                  ? colors.onPrimary
-                  : colors.onSurface,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
+          return SizedBox(
+            width: 120,
+            height: 42,
+            child: FilledButton.icon(
+              onPressed: () {
+                setState(() {
+                  _selectedTab = index;
+                });
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: selected
+                    ? colors.primary
+                    : colors.surfaceContainerHighest,
+                foregroundColor: selected
+                    ? colors.onPrimary
+                    : colors.onSurface,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22),
+                ),
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(22),
+              icon: Icon(
+                tabs[index].$1,
+                size: 17,
+              ),
+              label: Text(
+                tabs[index].$2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-            icon: Icon(
-              tabs[index].$1,
-              size: 17,
-            ),
-            label: Text(tabs[index].$2),
           );
         },
       ),
@@ -371,7 +377,6 @@ class _VeterinaryRecordsScreenState
 
   Widget _buildAddRecord(ColorScheme colors) {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: colors.primaryContainer,
@@ -486,7 +491,6 @@ class _VeterinaryRecordsScreenState
 
   Widget _buildSyncCard(ColorScheme colors) {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: colors.surfaceContainerLow,
@@ -796,8 +800,8 @@ class _TimelineEntry extends StatelessWidget {
 
                   if (buttonText != null) ...[
                     const SizedBox(height: 14),
-                    SizedBox(
-                      height: 42,
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: FilledButton.icon(
                         onPressed: onPressed,
                         icon: const Icon(
