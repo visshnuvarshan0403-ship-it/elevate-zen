@@ -17,7 +17,7 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
       name: 'Nirunjhana',
       message: 'I have completed my clinical history...',
       time: '2m',
-      avatarUrl: 'https://i.pravatar.cc/150?img=12',
+      initials: 'N',
       unread: true,
       online: true,
     ),
@@ -25,7 +25,7 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
       name: 'Anita Rao',
       message: 'I uploaded my latest lab report.',
       time: '1h',
-      avatarUrl: 'https://i.pravatar.cc/150?img=47',
+      initials: 'AR',
       unread: false,
       online: true,
     ),
@@ -78,35 +78,29 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
   }
 
   void _navigate(int index) {
-    switch (index) {
-      case 0:
-        Navigator.pushReplacementNamed(
-          context,
-          '/doctor',
-        );
-        break;
-      case 1:
-        Navigator.pushReplacementNamed(
-          context,
-          '/doctor/patients',
-        );
-        break;
-      case 2:
-        break;
-      case 3:
-        Navigator.pushReplacementNamed(
-          context,
-          '/doctor/profile',
-        );
-        break;
-    }
+  switch (index) {
+    case 0:
+      Navigator.pushReplacementNamed(
+        context,
+        '/doctor',
+      );
+      break;
+    case 1:
+      Navigator.pushReplacementNamed(
+        context,
+        '/doctor/patients',
+      );
+      break;
+    case 2:
+      break;
   }
+}
 
   void _openConversation(_Conversation conversation) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => DoctorConversationScreen(
+        builder: (_) => _DoctorConversationScreen(
           conversation: conversation,
         ),
       ),
@@ -471,37 +465,24 @@ class _ConversationAvatar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        SizedBox(
-          width: 64,
-          height: 64,
-          child: conversation.avatarUrl != null
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    conversation.avatarUrl!,
-                  ),
-                )
-              : CircleAvatar(
-                  backgroundColor:
-                      colorScheme.primaryContainer,
-                  child: Text(
-                    conversation.initials ?? '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(
-                          color:
-                              colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
+        CircleAvatar(
+          radius: 32,
+          backgroundColor: colorScheme.primaryContainer,
+          foregroundColor: colorScheme.onPrimaryContainer,
+          child: Text(
+            conversation.initials ?? '',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onPrimaryContainer,
+                  fontWeight: FontWeight.w600,
                 ),
+          ),
         ),
         Positioned(
           right: -1,
           bottom: -1,
           child: Container(
-            width: 20,
-            height: 20,
+            width: 18,
+            height: 18,
             decoration: BoxDecoration(
               color: conversation.online
                   ? colorScheme.primary
@@ -569,21 +550,19 @@ class _EmptySearchState extends StatelessWidget {
   }
 }
 
-class DoctorConversationScreen extends StatefulWidget {
+class _DoctorConversationScreen extends StatefulWidget {
   final _Conversation conversation;
 
-  const DoctorConversationScreen({
-    super.key,
+  const _DoctorConversationScreen({
     required this.conversation,
   });
 
   @override
-  State<DoctorConversationScreen> createState() =>
+  State<_DoctorConversationScreen> createState() =>
       _DoctorConversationScreenState();
 }
 
-class _DoctorConversationScreenState
-    extends State<DoctorConversationScreen> {
+class _DoctorConversationScreenState extends State<_DoctorConversationScreen> {
   final TextEditingController messageController =
       TextEditingController();
 
@@ -904,7 +883,6 @@ class _Conversation {
   final String name;
   final String message;
   final String time;
-  final String? avatarUrl;
   final String? initials;
   final bool unread;
   final bool online;
@@ -913,7 +891,6 @@ class _Conversation {
     required this.name,
     required this.message,
     required this.time,
-    this.avatarUrl,
     this.initials,
     required this.unread,
     required this.online,

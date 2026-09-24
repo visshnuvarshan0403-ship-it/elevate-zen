@@ -460,7 +460,6 @@ class _MissingInformationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
 
     return _SectionCard(
       title: 'Missing Information',
@@ -996,7 +995,7 @@ class _SectionCard extends StatelessWidget {
                         ),
                   ),
                 ),
-                if (trailing != null) trailing!,
+                ?trailing,
               ],
             ),
             const SizedBox(height: 18),

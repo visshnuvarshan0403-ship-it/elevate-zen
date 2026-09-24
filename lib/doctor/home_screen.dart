@@ -198,7 +198,6 @@ class _Header extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                debugPrint('PROFILE CLICKED');
                 Navigator.of(context).pushNamed('/doctor/profile');
               },
               borderRadius: BorderRadius.circular(30),

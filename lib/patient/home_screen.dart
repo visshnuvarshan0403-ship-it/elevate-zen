@@ -22,7 +22,9 @@ class PatientHomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const _Greeting(),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
+                    const _AbhaCard(),
+                    const SizedBox(height: 28),
                     const _ConsultationCard(),
                     const SizedBox(height: 28),
                     const MentalWellnessSection(),
@@ -524,6 +526,86 @@ class _RecordCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AbhaCard extends StatelessWidget {
+  const _AbhaCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Card(
+      margin: EdgeInsets.zero,
+      color: colorScheme.secondaryContainer,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/patient/abha',
+          );
+        },
+        borderRadius: BorderRadius.circular(24),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: colorScheme.secondary,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.health_and_safety_outlined,
+                  color: colorScheme.onSecondary,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'ABHA & ABDM',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.onSecondaryContainer,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Connect your digital health identity',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                            color: colorScheme.onSecondaryContainer,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 18,
+                color: colorScheme.onSecondaryContainer,
+              ),
+            ],
+          ),
         ),
       ),
     );

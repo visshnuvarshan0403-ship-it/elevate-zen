@@ -66,3 +66,56 @@ class PatientNavigationBar extends StatelessWidget {
     );
   }
 }
+
+
+class PatientShell extends StatelessWidget {
+  final Widget child;
+  final int selectedIndex;
+
+  const PatientShell({
+    super.key,
+    required this.child,
+    required this.selectedIndex,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: child,
+      bottomNavigationBar: PatientNavigationBar(
+        selectedIndex: selectedIndex,
+        onSelected: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(
+                context,
+                '/patient',
+              );
+              break;
+
+            case 1:
+              Navigator.pushReplacementNamed(
+                context,
+                '/patient/case',
+              );
+              break;
+
+            case 2:
+              Navigator.pushReplacementNamed(
+                context,
+                '/patient/doctor-chat',
+              );
+              break;
+
+            case 3:
+              Navigator.pushReplacementNamed(
+                context,
+                '/patient/records',
+              );
+              break;
+          }
+        },
+      ),
+    );
+  }
+}

@@ -30,8 +30,7 @@ class DoctorNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return NavigationBar(
       selectedIndex: selectedIndex,
